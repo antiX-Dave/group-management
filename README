@@ -1,0 +1,11 @@
+as root copy group-management to /usr/local/bin
+cp ./group-management /usr/local/bin/group-management
+and give it execute permissions
+chmod 755 /usr/local/bin/group-management
+cp ./desktop_tool.py /usr/local/bin/desktop_tool.py
+and give it execute permissions
+chmod 755 /usr/local/bin/desktop_tool.py
+cp ./GM-set /usr/local/bin/GM-set
+and give it execute permissions
+chmod 755 /usr/local/bin/GM-set
+
