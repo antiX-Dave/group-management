@@ -32,7 +32,7 @@ import os
 import sys
 from desktop_tool import DesktopToolWidget
 from desktop_tool import get_icon as get_icon
-BACKGROUND_SCRIPT="GM-set"
+BACKGROUND_SCRIPT="./GM-set"
 
 class Error:
     def __init__(self, error):
@@ -487,6 +487,8 @@ class Recover:
         
         if (group == "No group Selected:"):
             sys.exit(Error("You must choose a group"))
+        elif (group == "No group Recoverable:"):
+            sys.exit(Error("There are no records of a recoverable group."))
         else:
             cmdstring = "%s -rc %s" % ((BACKGROUND_SCRIPT), (group))
             #print (cmdstring)
@@ -517,12 +519,14 @@ class Recover:
         self.combobox = gtk.combo_box_new_text()
         frame.add(self.combobox)
         self.combobox.show()
-        self.combobox.append_text('No group Selected:')
-    
-        for line in open("/etc/groups.bk", "r").xreadlines():
-            if re.search(r':x:1[0-9][0-9][0-9]', line):
-                pieces = line.split(':')
-                self.combobox.append_text(pieces[0])
+        if not os.path.isfile("/etc/groups.bk"):
+			self.combobox.append_text('No group Recoverable:')
+        else:
+            self.combobox.append_text('No group Selected:')
+            for line in open("/etc/groups.bk", "r").xreadlines():
+                if re.search(r':x:1[0-9][0-9][0-9]', line):
+                    pieces = line.split(':')
+                    self.combobox.append_text(pieces[0])
         
         #combobox.connect('changed', self.changed_cb)
         self.combobox.set_active(0)
