@@ -75,6 +75,7 @@ function recoverGroup {
 	GROUP=$2
 	cat /etc/groups.bk | grep "^$GROUP:" | head -1 >> /etc/group &&
 	cat /etc/groups.bk | grep "^$GROUP:" | tail -1 >> /etc/gshadow &&
+    sed -ir "s/^$GROUP:.*//" /etc/groups.bk &&	
 	yad --title="Group-Management" --image="info" --text="Group Recovered"
 }
 
